@@ -3,37 +3,37 @@
 		<div class="video-products-card__top">
 			<div class="video-products-card__basic-info">
 				<div class="video-products-card__basic-info__left">
-					<img v-lazy="data.streamer.cdnImageUrl || data.streamer.images.mobile || data.streamer.images.desktop" :alt="data.streamer.title" v-if="data.streamer">
+					<img v-lazy="data.streamer.image.small" :alt="data.streamer.title" v-if="data.streamer">
 					<div class="video-products-card__basic-info__left__author">
 						<span class="author" v-if="data.streamer">{{ data.streamer.title }}</span>
 					</div>
 				</div>
 				<div class="video-products-card__basic-info__right">
-					<template v-if="data.status == 'NOT_STARTED'">
+					<template v-if="data.stream.status == 'not_started'">
 						<span class="stream-starts-at">Стрим начнется</span>
 						<span class="date">
-							{{ $moment(data.dateTimeStart).format('DD MMMM HH:mm').toLowerCase() }}
+							{{ $moment(data.stream.startAt).format('DD MMMM HH:mm').toLowerCase() }}
 						</span>
 					</template>
-					<template v-if="data.status == 'IN_PROCESS'">
+					<template v-if="data.stream.status == 'live'">
 						<div class="live"><span>LIVE</span></div>
 					</template>
 				</div>
 			</div>
-			<h2 class="video-products-card__title">{{ data.title }}</h2>
+			<h2 class="video-products-card__title">{{ data.stream.title }}</h2>
 		</div>
-		<router-link class="video-products-card__video" :class="{'video--no-icon' : data.status == 'NOT_STARTED'}" :to="{ name: 'stream-slug', params: { slug: data.humanUrl }}" :id="`video-block-${data.id}${randomPostfix}`">
-			<img v-lazy="data.images.desktop" :alt="data.title" class="thumbnail">
-			<svg class="icon-play" v-if="data.status !== 'NOT_STARTED'" width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M12.9539 12.6519L11.8378 10.8631C11.3224 10.0375 11.05 9.09188 11.05 8.12938V6.5625C11.05 4.58437 9.67713 2.91126 7.79984 2.37188V1.25001C7.79984 0.560625 7.21677 0 6.49978 0C5.78279 0 5.19972 0.560625 5.19972 1.25001V2.37188C3.32247 2.91126 1.94961 4.58437 1.94961 6.5625V8.12938C1.94961 9.09188 1.67724 10.0369 1.16242 10.8625L0.0463396 12.6513C-0.0141128 12.7482 -0.0154229 12.8682 0.0424395 12.9663C0.100302 13.0644 0.207556 13.125 0.324561 13.125H12.675C12.792 13.125 12.8999 13.0644 12.9578 12.9669C13.0157 12.8694 13.0137 12.7481 12.9539 12.6519Z" fill="white"/>
-			<path d="M4.45312 13.7499C4.81974 14.4861 5.59587 14.9999 6.50003 14.9999C7.4042 14.9999 8.18036 14.4861 8.54697 13.7499H4.45312Z" fill="white"/>
+		<router-link class="video-products-card__video" :class="{'video--no-icon' : data.stream.status == 'not_started'}" :to="{ params: { slug: data.stream.humanUrl }}" :id="`video-block-${data.stream.id}`">
+			<img v-lazy="data.stream.image.big" :alt="data.title" class="thumbnail">
+			<svg class="icon-play" v-if="data.stream.status !== 'not_started'" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect width="72" height="72" transform="matrix(1 0 0 -1 0 72)" fill="black"/>
+				<path d="M24 48.49V23.51C24 21.9603 25.6864 20.9993 27.0196 21.7894L48.0965 34.2794C49.4037 35.0541 49.4037 36.9459 48.0965 37.7206L27.0196 50.2106C25.6864 51.0007 24 50.0397 24 48.49Z" fill="white"/>
 			</svg>
-			<div class="reminder" v-if="data.status == 'NOT_STARTED'">
-				<span>{{ formatDate($moment(data.dateTimeStart).format('DD MMMM HH:mm').toLowerCase()) }}</span>
+			<div class="reminder" v-if="data.stream.status == 'not_started'">
+				<span>{{ formatDate($moment(data.stream.startAt).format('DD MMMM HH:mm').toLowerCase()) }}</span>
 			</div>
 		</router-link>
 		<div class="video-products-card__products" v-if="data.products">
-			<card-scroller v-if="data && data.products && data.products.length > 0" :isProducts="true" :position="data.position || position" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :documentWidth="documentWidth" name="goods" :idVideo="`${data.id}${randomPostfix}`" style="margin-bottom: 0">
+			<card-scroller v-if="data && data.products && data.products.length > 0" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :idVideo="`${data.stream.id}`">
 				<template v-slot="{card}">
 					<good-in-slider class="cards__good" :good="card" />
 				</template>
@@ -53,7 +53,6 @@ export default {
 
 	data() {
 		return {
-			randomPostfix: Math.floor(Math.random() * 999) + 1,
 			video: false,
 			restartCheckVisible: 1
 		}
@@ -73,7 +72,7 @@ export default {
 		},
 
 		checkVisible() {
-			const block = document.querySelector(`#video-block-${this.data.id}${this.randomPostfix}`)
+			const block = document.querySelector(`#video-block-${this.data.id}`)
 			if (block) {
 				let rect = block.getBoundingClientRect()
 				let top = rect.top;
@@ -127,7 +126,7 @@ export default {
 		$route(to) {
 			// if(!this.autoplayVideo) return
 			setTimeout(() => {
-				if (process.client && to.path === '/' && this.data && this.data.status !== 'NOT_STARTED') {
+				if (process.client && to.path === '/' && this.data && this.data.stream.status !== 'not_started') {
 					// this.initVideo()
 				} else {
 					this.video = false
@@ -139,3 +138,249 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/mixins/common';
+@include common;
+
+@mixin span14 {
+	display: block;
+	font-size: 14px;
+	line-height: 100%;
+}
+
+@mixin span13 {
+	display: block;
+	font-size: 13px;
+	line-height: 100%;
+}
+
+.video-products-card {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	background: #FFFFFF;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+	border-radius: 8px;
+
+	.good__sale {
+		bottom: 5px !important;
+		right: 5px !important;
+		top: unset !important;
+		left: unset !important;
+	}
+
+	&__top {
+		padding: 20px;
+		width: 100%;
+	}
+
+	&__basic-info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-bottom: 17px;
+		border-bottom: 1px solid #E5E5E5;
+		margin-bottom: 10px;
+		
+		&__left {
+			display: flex;
+			align-items: center;
+
+			img {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				object-fit: cover;
+				margin-right: 10px;
+			}
+
+			&__author {
+				display: flex;
+				flex-direction: column;
+
+				.author {
+					@include span14;
+					color: black;
+					font-weight: 600;
+				}
+			}
+		}
+
+		&__right {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+
+			.stream-starts-at, .date {
+				@include span14;
+			}
+
+			.stream-starts-at {
+				color: #979797;
+				margin-bottom: 6px;
+				font-weight: 400;
+			}
+
+			.date {
+				color: black;
+				font-weight: 500;
+			}
+
+			.live {
+				display: flex;
+				align-items: center;
+
+				span {
+					font-size: 12px;
+					line-height: 12px;
+					text-transform: uppercase;
+					color: #000000;
+				}
+
+				&:before {
+					content: '';
+					display: block;
+					margin-right: 5px;
+					width: 6px;
+					height: 6px;
+					background: #FF1C1C;
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+
+	&__title {
+		font-size: 16px;
+		line-height: 20px;
+		color: #000000;
+		margin-bottom: 0;
+		font-weight: 400;
+	}
+
+	&__video {
+		width: 100%;
+		padding-bottom: 56.3%;
+		position: relative;
+
+		.thumbnail {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			min-height: 200px;
+			max-height: 700px;
+			object-fit: cover;
+		}
+
+		.reminder {
+			padding: 13px 40px;
+			background: rgba(0, 0, 0, 0.56);
+			font-size: 12px;
+			line-height: 15px;
+			text-align: center;
+			color: #FFFFFF;
+			font-weight: 400;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 1;
+			text-transform: uppercase;
+		}
+
+		.video {
+			position: relative;
+
+			&:after {
+				content: '';
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,.5);
+			}
+		}
+
+		.icon-play {
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 72px;
+			height: 72px;
+			z-index: 1;
+		}
+	}
+
+	&__products {
+		position: relative;
+	}
+}
+
+@media (max-width: 1400px) {
+	.video-products-card {
+		&__video {
+			img {
+				max-height: 420px;
+			}
+		}
+	}
+}
+
+@media (max-width: 700px) {
+	.video-products-card {
+		&__basic-info {
+			&__left {
+				img {
+					width: 32px;
+					height: 32px;
+				}
+
+				&__author {
+					.author {
+						font-size: 12px;
+					}
+
+					.author {
+						margin-bottom: 5px;
+					}
+				}
+			}
+
+			&__right {
+				.stream-starts-at, .date {
+					font-size: 12px;
+				}
+
+				.stream-starts-at {
+					margin-bottom: 5px;
+				}
+			}
+		}
+
+		&__title {
+			font-size: 14px;
+		}
+	}
+}
+
+@media (max-width: 550px) {
+	.video-products-card {
+		border-radius: 0;
+
+		&__basic-info {
+			border-bottom: none;
+			padding-bottom: 0;
+			margin-bottom: 7px;
+		}
+	}
+}
+</style>

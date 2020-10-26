@@ -1,71 +1,59 @@
 <template>
   <div class="index-page">
     <div class="container">
-      <div class="breadcrumbs">
-        <span>Главная  > Прямые эфиры</span>
-      </div>
-      <video-products-card v-for="i in 3" :key="i" :data="{
-        streamer: {
-          images: {
-            desktop: '/temp/streamer.png'
-          },
-          title: 'Мария Миногарова'
-        },
-        status: i == 2 ? 'IN_PROCESS' : (i == 3 ? 'FINISHED' :'NOT_STARTED'),
-        dateTimeStart: '2003-11-20T11:11:11Z',
-        title: 'Уход за волосами в домашних условиях: правила, средства, витамины и рекомендации',
-        images: {
-          desktop: '/temp/thumb.png'
-        },
-        products: [
-          {
-            price: '3999',
-            priceWithSalePercent: '2999',
-            title: 'Hydra Zen Glow',
-            desc: 'Успокаивающая и увлажняющая эмульсия',
-            images: {
-              desktop: '/temp/hydra.png'
-            }
-          },
-          {
-            price: '3999',
-            priceWithSalePercent: '2999',
-            title: 'Hydra Zen Glow',
-            desc: 'Успокаивающая и увлажняющая эмульсия',
-            images: {
-              desktop: '/temp/hydra.png'
-            }
-          },
-          {
-            price: '3999',
-            priceWithSalePercent: '2999',
-            title: 'Hydra Zen Glow',
-            desc: 'Успокаивающая и увлажняющая эмульсия',
-            images: {
-              desktop: '/temp/hydra.png'
-            }
-          },
-          {
-            price: '3999',
-            priceWithSalePercent: '2999',
-            title: 'Hydra Zen Glow',
-            desc: 'Успокаивающая и увлажняющая эмульсия',
-            images: {
-              desktop: '/temp/hydra.png'
-            }
-          },
-        ]
-      }" />
+      <video-products-card v-for="(item, i) in filteredData" :key="i" :data="item" />
     </div>
   </div>
 </template>
 
 <script>
+import data from '@/temp/data.js';
+
 export default {
   name: 'Index',
 
   components: {
     VideoProductsCard: () => import('@/components/VideoProductsCard')
+  },
+
+  data() {
+    return {
+      rawData: data,
+      filteredData: []
+    }
+  },
+
+  mounted() {
+    if (window.params)
+      console.log(window.params);
+
+    if (window.params) {
+      let data = [],
+        curStream;
+
+      if (window.params.streams) {
+        window.params.streams.forEach(q => {
+          curStream = this.rawData.find(s => s.stream.id == q);
+          if (curStream)
+            data.push(curStream);
+          else {
+            console.log(`Stream with id ${q} doesn't exist`);
+          }
+        });
+        this.filteredData = data;
+      }
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/scss/mixins/container';
+
+@include special-container;
+
+.index-page {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+</style>
