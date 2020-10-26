@@ -24,11 +24,10 @@
 		</div>
 		<router-link class="video-products-card__video" :class="{'video--no-icon' : data.status == 'NOT_STARTED'}" :to="{ name: 'stream-slug', params: { slug: data.humanUrl }}" :id="`video-block-${data.id}${randomPostfix}`">
 			<img v-lazy="data.images.desktop" :alt="data.title" class="thumbnail">
-			<div v-if="data.status == 'NOT_STARTED'" class="reminder">
-				<span>Напомнить мне</span>
-				<img src="/svg/remind.svg" alt="remind">
-			</div>
 			<img src="/svg/play.svg" class="icon-play" v-if="data.status !== 'NOT_STARTED'" alt="play">
+			<div class="reminder" v-if="data.status == 'NOT_STARTED'">
+				<span>{{ formatDate($moment(data.dateTimeStart).format('DD MMMM HH:mm').toLowerCase()) }}</span>
+			</div>
 		</router-link>
 		<div class="video-products-card__products" v-if="data.products">
 			<card-scroller v-if="data && data.products && data.products.length > 0" :isProducts="true" :position="data.position || position" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :documentWidth="documentWidth" name="goods" :idVideo="`${data.id}${randomPostfix}`" style="margin-bottom: 0">
@@ -41,18 +40,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-
 export default {
 	props: ['data', 'playVideo', 'documentWidth', 'position'],
 
 	components: {
 		CardScroller: () => import('@/components/CardScroller'),
 		GoodInSlider: () => import('@/components/GoodInSlider'),
-	},
-
-	computed: {
-		...mapState(['notifications']),
 	},
 
 	data() {
@@ -64,24 +57,8 @@ export default {
 	},
 
 	methods: {
-		...mapActions(['addToNotifications', 'removeFromNotifications']),
-
-		isInNotifications() {
-			return false
-			// return this.notifications.find(v => v.id == this.data.id) ? true : false;
-		},
-
-		addToNotificationsLocal() {
-			if (!this.isInNotifications()) {
-				this.addToNotifications({
-					id: this.data.id,
-					streamer: this.data.streamer.title,
-					endDate: this.data.dateTimeEnd,
-					startDate: this.data.dateTimeStart
-				});
-			} else {
-				this.removeFromNotifications(this.data.id);
-			}
+		formatDate(date) {
+			return date.slice(0, date.length - 5) + '· ' + date.slice(date.length - 5)
 		},
 
 		//! Автоплей, чеккинг скролла и сокеты

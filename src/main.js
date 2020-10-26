@@ -9,7 +9,12 @@ import VueLazyload from 'vue-lazyload'
 import VueObserveVisibility from 'vue-observe-visibility'
 import VueCurrencyFilter from 'vue-currency-filter'
 
-Vue.use(require('vue-moment'));
+const moment = require('moment');
+Vue.use(require('vue-moment'), {
+	moment
+});
+require('moment/locale/ru');
+
 Vue.use(VueLazyload);
 Vue.use(VueObserveVisibility)
 Vue.use(VueCurrencyFilter)

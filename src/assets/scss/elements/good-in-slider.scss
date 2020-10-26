@@ -58,7 +58,7 @@
     @include ellipsis;
     margin: 0;
     padding: 0;
-    font-weight: 450;
+    font-weight: 500;
     font-size: 12px;
     line-height: 14px;
     color: black;
@@ -69,7 +69,7 @@
 
   &__desc {
     @include ellipsis;
-    font-weight: normal;
+    font-weight: 400;
     font-size: 14px;
     line-height: 16px;
     color: #0C0C0C;
@@ -83,7 +83,8 @@
   }
 
   &__old-price {
-    font-weight: normal;
+    font-family: Avenir, Arial, sans-serif;
+    font-weight: 400;
     font-size: 12px;
     line-height: 15px;
     text-decoration-line: line-through;
@@ -92,7 +93,8 @@
   }
 
   &__price {
-    font-weight: 450;
+    font-family: Avenir, Arial, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     line-height: 20px;
     color: #000000;
@@ -104,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 450;
+    font-weight: 400;
     max-width: 144px;
     height: 40px;
     font-size: 12px;
@@ -113,6 +115,12 @@
     text-transform: uppercase;
     color: #FFFFFF;
     flex-grow: 1;
+    z-index: 1;
+    transition: background .2s ease;
+
+    &:hover {
+      background: $pink;
+    }
   }
 
   &__info-wrap {

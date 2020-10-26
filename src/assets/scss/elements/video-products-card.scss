@@ -57,11 +57,8 @@
 
 				.author {
 					@include span14;
-				}
-
-				.author {
 					color: black;
-					font-weight: bold;
+					font-weight: bolder;
 				}
 			}
 		}
@@ -74,16 +71,16 @@
 
 			.stream-starts-at, .date {
 				@include span14;
+				font-weight: normal;
 			}
 
 			.stream-starts-at {
-				color: #6F6F6F;
-				margin-bottom: 7px;
+				color: #979797;
+				margin-bottom: 6px;
 			}
 
 			.date {
 				color: black;
-				font-weight: 500;
 			}
 
 			.live {
@@ -115,40 +112,13 @@
 		line-height: 20px;
 		color: #000000;
 		margin-bottom: 0;
-		font-weight: normal;
+		font-weight: 400;
 	}
 
 	&__video {
 		width: 100%;
 		padding-bottom: 56.3%;
 		position: relative;
-
-		.reminder {
-			width: 190px;
-			height: 40px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background: rgba(0, 0, 0, 0.56);
-			border: 1px solid #FFFFFF;
-			font-weight: 450;
-			font-size: 12px;
-			line-height: 100%;
-			text-align: right;
-			text-transform: uppercase;
-			color: #FFFFFF;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			z-index: 1;
-
-			img {
-				margin-left: 8px;
-				width: 13px;
-				height: 15px;
-			}
-		}
 
 		.thumbnail {
 			position: absolute;
@@ -159,6 +129,22 @@
 			min-height: 200px;
 			max-height: 700px;
 			object-fit: cover;
+		}
+
+		.reminder {
+			padding: 13px 40px;
+			background: rgba(0, 0, 0, 0.56);
+			font-size: 12px;
+			line-height: 15px;
+			text-align: center;
+			color: #FFFFFF;
+			font-weight: 500;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 1;
+			text-transform: uppercase;
 		}
 
 		.video {
