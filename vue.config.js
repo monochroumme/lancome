@@ -13,7 +13,7 @@ module.exports = {
           default: false,
           // Custom common chunk
           bundle: {
-            name: 'app',
+            name: 'common',
             chunks: 'all',
             minChunks: 1,
             reuseExistingChunk: true,
