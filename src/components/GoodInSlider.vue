@@ -54,7 +54,7 @@ export default {
   width: 100%;
   position: relative;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   overflow: hidden;
   background-color: $white;
   transition: box-shadow 0.4s, border-color 0.4s;
@@ -102,7 +102,7 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     border-right: 1px solid #e5e5e5;
     position: relative;
 
@@ -188,6 +188,8 @@ export default {
     align-items: center;
     font-weight: 400;
     max-width: 144px;
+    min-width: 144px;
+    width: 100%;
     height: 40px;
     font-size: 12px;
     line-height: 100%;
@@ -291,7 +293,58 @@ export default {
 
 @media (max-width: 550px) {
   .good {
-    
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-right: 0;
+    border-right: 1px solid #e5e5e5;
+
+    &__title {
+      margin-bottom: 4px;
+    }
+
+    &__desc {
+      margin-bottom: 13px;
+    }
+
+    &__outer {
+      max-width: 312px;
+    }
+
+    &__price-wrap {
+      margin-right: 24px;
+    }
+
+    &__img-wrap {
+      margin-top: 0;
+      margin-bottom: 0;
+      min-width: 73px;
+      min-height: 73px;
+      width: 73px;
+      height: 73px;
+    }
+
+    &__buy-button {
+      min-width: 100px;
+      max-width: 116px;
+      width: 116px;
+    }
+
+    &__desc-wrap {
+      padding-right: 27px;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      border-right: none;
+    }
+  }
+
+  .cards__item {
+    &:last-of-type {
+      .good {
+        border-right: none;
+      }
+    }
   }
 }
 </style>

@@ -37,12 +37,12 @@ export default {
       swiperOption: {
         slidesPerView: "auto",
         loop: false,
-        autoplay: {
-          delay: 5000
-        },
+        // autoplay: {
+        //   delay: 5000
+        // },
         navigation: {
-          nextEl: `.next-btn-${this.name}${this.idVideo}`,
-          prevEl: `.prev-btn-${this.name}${this.idVideo}`
+          nextEl: `.next-btn-goods-${this.idVideo}`,
+          prevEl: `.prev-btn-goods-${this.idVideo}`
         },
         preloadImages: false,
         lazyLoading: true,
@@ -183,12 +183,28 @@ export default {
 @media (max-width: 1400px) {
   .arrow-btn {
     &.swiper-button-prev.swiper-button-prev {
-      left: -9px;
+      left: -8px;
     }
 
     &.swiper-button-next.swiper-button-next {
-      right: -9px;
+      right: -8px;
     }
+  }
+}
+
+@media (max-width: 550px) {
+  .cards {
+    &--goods {
+      margin: 0 10px;
+
+      .swiper-container {
+        overflow: visible;
+      }
+    }
+  }
+
+  .arrow-btn {
+    display: none;
   }
 }
 </style>

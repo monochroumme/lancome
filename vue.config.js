@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
   filenameHashing: false,
@@ -48,6 +49,8 @@ module.exports = {
       }
       return args
     })
-    // config.optimization.delete('splitChunks')
+    // https://medium.com/@aetherus.zhou/vue-cli-3-performance-optimization-55316dcd491c
+    config.plugins.delete('prefetch');
+    config.plugin('CompressionPlugin').use(CompressionPlugin);
   }
 }

@@ -22,7 +22,7 @@
 			</div>
 			<h2 class="video-products-card__title">{{ data.stream.title }}</h2>
 		</div>
-		<router-link class="video-products-card__video" :class="{'video--no-icon' : data.stream.status == 'not_started'}" :to="{ params: { slug: data.stream.humanUrl }}" :id="`video-block-${data.stream.id}`">
+		<div class="video-products-card__video" :class="{clickable: data.stream.status != 'not_started'}" :id="`video-block-${data.stream.id}`">
 			<img v-lazy="data.stream.image.big" :alt="data.title" class="thumbnail">
 			<svg class="icon-play" v-if="data.stream.status !== 'not_started'" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect width="72" height="72" transform="matrix(1 0 0 -1 0 72)" fill="black"/>
@@ -31,7 +31,7 @@
 			<div class="reminder" v-if="data.stream.status == 'not_started'">
 				<span>{{ formatDate($moment(data.stream.startAt).format('DD MMMM HH:mm').toLowerCase()) }}</span>
 			</div>
-		</router-link>
+		</div>
 		<div class="video-products-card__products" v-if="data.products">
 			<card-scroller v-if="data && data.products && data.products.length > 0" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :idVideo="`${data.stream.id}`">
 				<template v-slot="{card}">
@@ -143,33 +143,14 @@ export default {
 @import '@/assets/scss/mixins/common';
 @include common;
 
-@mixin span14 {
-	display: block;
-	font-size: 14px;
-	line-height: 100%;
-}
-
-@mixin span13 {
-	display: block;
-	font-size: 13px;
-	line-height: 100%;
-}
-
 .video-products-card {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 20px;
 	background: #FFFFFF;
-	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12);
 	border-radius: 8px;
-
-	.good__sale {
-		bottom: 5px !important;
-		right: 5px !important;
-		top: unset !important;
-		left: unset !important;
-	}
 
 	&__top {
 		padding: 20px;
@@ -193,7 +174,7 @@ export default {
 				height: 40px;
 				border-radius: 50%;
 				object-fit: cover;
-				margin-right: 10px;
+				margin-right: 16px;
 			}
 
 			&__author {
@@ -201,7 +182,9 @@ export default {
 				flex-direction: column;
 
 				.author {
-					@include span14;
+					font-size: 20px;
+					line-height: 100%;
+					display: block;
 					color: black;
 					font-weight: 600;
 				}
@@ -215,7 +198,9 @@ export default {
 			align-items: flex-end;
 
 			.stream-starts-at, .date {
-				@include span14;
+				display: block;
+				font-size: 14px;
+				line-height: 100%;
 			}
 
 			.stream-starts-at {
@@ -234,8 +219,9 @@ export default {
 				align-items: center;
 
 				span {
-					font-size: 12px;
-					line-height: 12px;
+					font-weight: 500;
+					font-size: 14px;
+					line-height: 100%;
 					text-transform: uppercase;
 					color: #000000;
 				}
@@ -243,9 +229,9 @@ export default {
 				&:before {
 					content: '';
 					display: block;
-					margin-right: 5px;
-					width: 6px;
-					height: 6px;
+					margin-right: 4px;
+					width: 8px;
+					height: 8px;
 					background: #FF1C1C;
 					border-radius: 50%;
 				}
@@ -263,13 +249,9 @@ export default {
 
 	&__video {
 		width: 100%;
-		padding-bottom: 56.3%;
 		position: relative;
 
 		.thumbnail {
-			position: absolute;
-			top: 0;
-			left: 0;
 			width: 100%;
 			height: 100%;
 			min-height: 200px;
@@ -291,6 +273,10 @@ export default {
 			transform: translate(-50%, -50%);
 			z-index: 1;
 			text-transform: uppercase;
+
+      span {
+        white-space: nowrap;
+      }
 		}
 
 		.video {
@@ -335,51 +321,38 @@ export default {
 	}
 }
 
-@media (max-width: 700px) {
+@media (max-width: 550px) {
 	.video-products-card {
-		&__basic-info {
-			&__left {
-				img {
-					width: 32px;
-					height: 32px;
-				}
+		border-radius: 0;
 
-				&__author {
-					.author {
-						font-size: 12px;
-					}
-
-					.author {
-						margin-bottom: 5px;
-					}
-				}
-			}
-
-			&__right {
-				.stream-starts-at, .date {
-					font-size: 12px;
-				}
-
-				.stream-starts-at {
-					margin-bottom: 5px;
-				}
-			}
-		}
+    &__top {
+      padding: 14px 10px 18px;
+    }
 
 		&__title {
 			font-size: 14px;
 		}
-	}
-}
 
-@media (max-width: 550px) {
-	.video-products-card {
-		border-radius: 0;
+    &__products {
+      overflow: hidden;
+		}
 
 		&__basic-info {
 			border-bottom: none;
 			padding-bottom: 0;
 			margin-bottom: 7px;
+
+			&__left {
+				&__author {
+					.author {
+						font-size: 16px;
+					}
+				}
+			}
+
+      &__right {
+        text-align: right;
+      }
 		}
 	}
 }
