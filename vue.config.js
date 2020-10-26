@@ -13,7 +13,7 @@ module.exports = {
           default: false,
           // Custom common chunk
           bundle: {
-            name: 'common',
+            name: 'app',
             chunks: 'all',
             minChunks: 1,
             reuseExistingChunk: true,
@@ -60,6 +60,6 @@ module.exports = {
       }
       return args
     })
-    // config.optimization.splitChunks().clear();
+    config.optimization.splitChunks().clear();
   }
 }
