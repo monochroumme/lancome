@@ -1,6 +1,11 @@
+const webpack = require('webpack')
+
 module.exports = {
   filenameHashing: false,
   configureWebpack: {
+    plugins: [
+      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/)
+    ],
     optimization: {
       splitChunks: {
         cacheGroups: {
