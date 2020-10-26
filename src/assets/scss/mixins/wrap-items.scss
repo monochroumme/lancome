@@ -1,0 +1,21 @@
+@mixin wrap-items {
+    &:first-child {
+        margin-left: 16px;
+    }
+
+    &:last-child {
+        box-sizing: unset;
+        padding-right: 16px;
+    }
+
+    @media (min-width: $tablet-width) {
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            box-sizing: border-box;
+            padding-right: 0;
+        }
+    }
+}

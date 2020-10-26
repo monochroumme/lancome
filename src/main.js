@@ -5,6 +5,15 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+import VueLazyload from 'vue-lazyload'
+import VueObserveVisibility from 'vue-observe-visibility'
+import VueCurrencyFilter from 'vue-currency-filter'
+
+Vue.use(require('vue-moment'));
+Vue.use(VueLazyload);
+Vue.use(VueObserveVisibility)
+Vue.use(VueCurrencyFilter)
+
 new Vue({
   router,
   store,

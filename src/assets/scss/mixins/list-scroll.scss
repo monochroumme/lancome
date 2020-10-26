@@ -1,0 +1,9 @@
+@mixin list-scroll {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    overflow-x: scroll;
+    scrollbar-width: none;
+}

@@ -1,0 +1,18 @@
+@mixin wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    @media (min-width: $tablet-width) {
+        width: 720px;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @media (min-width: $desktop-width-max) {
+        padding: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
