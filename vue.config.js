@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   filenameHashing: false,
@@ -12,7 +13,7 @@ module.exports = {
           default: false,
           // Custom common chunk
           bundle: {
-            name: 'commons',
+            name: 'app',
             chunks: 'all',
             minChunks: 1,
             reuseExistingChunk: true,
@@ -34,7 +35,17 @@ module.exports = {
             enforce: true,
           },
         },
-      }
+      },
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            output: {
+              comments: false
+            }
+          }
+        }),
+      ],
     }
   },
   css: {
