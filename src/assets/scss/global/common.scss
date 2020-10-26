@@ -101,3 +101,10 @@ button {
     padding-right: 9px;
   }
 }
+
+@media (max-width: 550px) {
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

@@ -138,7 +138,7 @@
 			line-height: 15px;
 			text-align: center;
 			color: #FFFFFF;
-			font-weight: 500;
+			font-weight: 400;
 			position: absolute;
 			top: 50%;
 			left: 50%;
@@ -176,157 +176,6 @@
 
 	&__products {
 		position: relative;
-	}
-
-	&__bottom {
-		padding: 16px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		&__label {
-			@include span14;
-			color: #6F6F6F;
-			margin-right: 11px;
-
-			&:last-of-type {
-				margin-right: 0;
-			}
-
-			&.views {
-				&:before {
-					content: 'Просмотров: ';
-				}
-			}
-
-			&.purchases {
-				&:before {
-					content: 'Покупок: ';
-				}
-			}
-		}
-
-		&__views-purchases {
-			display: flex;
-		}
-
-		&__watch-recording, &__remind, &__watch-live {
-			height: 32px;
-			padding: 0 10px;
-			display: flex;
-			align-items: center;
-			border-radius: 4px;
-			background: white;
-			transition: background .2s ease;
-			&:focus,
-			&:active {
-				outline:none;
-			}
-
-			span {
-				@include span13;
-				margin-right: 9px;
-				color: black;
-				white-space: nowrap;
-			}
-		}
-
-		&__watch-recording, &__remind {
-			&:after {
-				content: '';
-				display: block;
-				height: 14px;
-				background-repeat: no-repeat;
-				background-size: 100%;
-				transition: background-image .2s ease;
-			}
-		}
-
-		&__watch-recording {
-			border: 1px solid #00DA71;
-
-			svg{
-				width: 10px;
-				height: 14px;
-				fill: #00DA71;
-
-				path{
-					fill: #00DA71;
-				}
-			}
-
-			&:hover {
-				background: #00DA71;
-				span {
-					color: #fff;
-				}
-				svg, svg path{
-					fill: #fff;
-				}
-			}
-		}
-
-		&__watch-live {
-			border: 1px solid #FF1C1C;
-
-			.live {
-				display: flex;
-				align-items: center;
-
-				span {
-					font-size: 10px;
-					line-height: 10px;
-					color: #FF1C1C;
-					margin-right: 0;
-					margin-left: 3px;
-				}
-
-				&:before {
-					content: '';
-					display: block;
-					border-radius: 50%;
-					background: #FF1C1C;
-					width: 6px;
-					height: 6px;
-				}
-			}
-			&:hover {
-				span {
-					color: #ffffff;
-				}
-				background: #FF1C1C;
-				.live {
-					color: #ffffff;
-					&:before {
-						background: #ffffff;
-					}
-				}
-			}
-		}
-
-		&__remind {
-			border: 1px solid #FFD600;
-
-			&:after {
-				width: 12px;
-				height: 14px;
-				background-image: url('/img/stream-bell-before.svg');
-			}
-			&:hover ,
-			&.active {
-				background: #FFD600;
-
-				span {
-					// color: white;
-					color: #000;
-				}
-
-				&:after {
-					background-image: url('/img/stream-bell-after-black.svg');
-				}
-			}
-			
-		}
 	}
 }
 
@@ -374,52 +223,17 @@
 		&__title {
 			font-size: 14px;
 		}
-
-		&__bottom {
-			&__label {
-				font-size: 12px;
-
-				.to-not-miss {
-					display: none;
-				}
-
-				&.views, &.purchases {
-					display: flex;
-
-					&:before {
-						content: '';
-						display: block;
-						width: 12px;
-						height: 12px;
-						background-repeat: no-repeat;
-						background-size: 100%;
-						margin-right: 5px;
-					}
-				}
-
-				&.views {
-					&:before {
-						background-image: url('/img/eye.svg');
-					}
-				}
-
-				&.purchases {
-					&:before {
-						background-image: url('/img/cart.svg');
-					}
-				}
-			}
-		}
 	}
 }
 
-@media (max-width: 449px) {
-	.video-products-card {
-		margin-bottom: 35px;
-	}
-}
-@media (max-width: 499px) {
+@media (max-width: 550px) {
 	.video-products-card {
 		border-radius: 0;
+
+		&__basic-info {
+			border-bottom: none;
+			padding-bottom: 0;
+			margin-bottom: 7px;
+		}
 	}
 }

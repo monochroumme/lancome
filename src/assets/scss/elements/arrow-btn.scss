@@ -1,8 +1,7 @@
 .arrow-btn {
-  border: 1px solid #E5E5E5;
   border-radius: 50%;
-  background-color: #F4F4F4;
-  box-shadow: -6px 0px 16px rgba(0, 0, 0, 0.12);
+  background-color: white;
+  box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.16);
 
   &.swiper-button-next,
   &.swiper-button-prev {
@@ -48,18 +47,17 @@
       transition: border-color .4s;
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       outline: none;
-      background-color: $yellow;
-      border-color: $yellow;
+      background-color: $pink;
+      border-color: $pink;
 
       &::before {
-        background-color: $black;
+        background-color: $white;
       }
 
       &::after {
-        border-color: $black;
+        border-color: $white;
       }
     }
 
@@ -108,6 +106,18 @@
 
     &::after {
       border-color: #969BA8;
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .arrow-btn {
+    &.swiper-button-prev.swiper-button-prev {
+      left: -9px;
+    }
+
+    &.swiper-button-next.swiper-button-next {
+      right: -9px;
     }
   }
 }

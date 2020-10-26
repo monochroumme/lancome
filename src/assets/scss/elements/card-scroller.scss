@@ -14,9 +14,9 @@
     }
 
     .cards__item {
-      @include wrap-items;
       display: flex;
       flex-shrink: 0;
+      width: fit-content;
     }
 
     .cards__hover {
@@ -48,48 +48,4 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 14px;
-}
-
-@media (min-width: 450px) {
-  .cards__hover {
-    width: auto;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .cards__brand-header {
-    margin-left: 24px;
-    margin-right: 24px;
-  }
-}
-
-@media (min-width: 1000px) {
-  .cards {
-    &--goods {
-      .video__hover-wrap {
-        padding: 24px;
-      }
-
-      .cards__item {
-        width: 474px;
-      }
-
-      .swiper-container {
-        padding: 0;
-      }
-
-      .swiper-slide {
-        height: auto;
-      }
-    }
-  }
-
-  .cards__hover {
-    padding-top: 0;
-    margin-left: 0;
-  }
-
-  .cards__hero {
-    max-width: 193px;
-  }
 }
