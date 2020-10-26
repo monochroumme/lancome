@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const TerserPlugin = require('terser-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   filenameHashing: false,
@@ -36,19 +36,30 @@ module.exports = {
           },
         },
       },
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            output: {
-              comments: false
-            }
-          }
-        }),
-      ],
+      // minimize: true,
+      // minimizer: [
+      //   new TerserPlugin({
+      //     extractComments: false,
+      //     terserOptions: {
+      //       ecma: 6,
+      //       compress: { drop_console: true },
+      //       output: { comments: false, beautify: false }
+      //     }
+      //   }),
+      // ],
     }
   },
   css: {
     extract: false
+  },
+  chainWebpack: config => {
+    config.optimization.minimizer('terser').tap((args) => {
+      args[0].terserOptions.output = {
+        ...args[0].terserOptions.output,
+        comments: false  // exclude all comments from output
+      }
+      return args
+    })
+    // config.optimization.splitChunks().clear();
   }
 }
