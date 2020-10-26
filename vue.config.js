@@ -60,6 +60,6 @@ module.exports = {
       }
       return args
     })
-    config.optimization.splitChunks().clear();
+    config.optimization.delete('splitChunks')
   }
 }
