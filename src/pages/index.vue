@@ -89,6 +89,9 @@ export default {
         });
         this.filteredData = data;
       }
+
+      if (this.filteredData.length == 0)
+        this.filteredData = this.widgetData;
     }
 
     window.addEventListener('resize', this.onResize, false);
