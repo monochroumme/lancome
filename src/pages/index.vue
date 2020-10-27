@@ -90,7 +90,6 @@ export default {
   watch: {
     currentStreamExists: {
       handler(n) {
-        console.log(n, this.widgetData);
         if (n && this.widgetData) {
           setTimeout(() => {
             this.currentStream = this.widgetData.find(s => s.stream.url == this.$route.query.stream);
@@ -230,7 +229,6 @@ export default {
   &__products {
     overflow-y: auto;
     padding: 24px 10px;
-    flex-grow: 1;
 
     &-item {
       display: flex;
