@@ -89,9 +89,8 @@ export default {
         });
         this.filteredData = data;
       }
-
     }
-    
+
     if (this.filteredData.length == 0)
       this.filteredData = this.widgetData;
 
