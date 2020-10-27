@@ -74,7 +74,7 @@ export default {
 				if (this.windowWidth > 550) {
 					this.isIFrameShown = true;
 				}
-				this.$router.push({name: 'index', query: {}});
+				this.$router.push({name: 'index', query: {}}).catch(()=>{});
 				this.$nextTick(() => {
 					this.$router.push({query: {
 						stream: this.data.stream.url
