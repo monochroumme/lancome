@@ -44,95 +44,16 @@
 
 <script>
 export default {
-	props: ['data', 'playVideo', 'documentWidth', 'position'],
+	props: ['data'],
 
 	components: {
 		CardScroller: () => import('@/components/CardScroller'),
 		GoodInSlider: () => import('@/components/GoodInSlider'),
 	},
 
-	data() {
-		return {
-			video: false,
-			restartCheckVisible: 1
-		}
-	},
-
 	methods: {
 		formatDate(date) {
 			return date.slice(0, date.length - 5) + '· ' + date.slice(date.length - 5)
-		},
-
-		//! Автоплей, чеккинг скролла и сокеты
-		listenScroll() {
-			document.addEventListener('scroll', () => {
-				this.restartCheckVisible = false
-				this.checkVisible()
-			})
-		},
-
-		checkVisible() {
-			const block = document.querySelector(`#video-block-${this.data.id}`)
-			if (block) {
-				let rect = block.getBoundingClientRect()
-				let top = rect.top;
-				let bottom = rect.bottom;
-				let isVisible = (top >= 0) && (bottom <= window.innerHeight)
-
-				try {
-					if (isVisible) {
-						this.video.play()
-						this.$socketIo.emit('subscribe-stream', { stream: this.data.id })
-					} else {
-						this.video.pause()
-						this.$socketIo.emit('unsubscribe-stream', { stream: this.data.id })
-					}
-				} catch (err) {
-					setTimeout(() => {
-						if (this.restartCheckVisible && this.restartCheckVisible < 5) {
-							this.checkVisible()
-							this.restartCheckVisible++
-						}
-					}, 1000);
-				}
-			}
-		},
-
-		initVideo() {
-			const that = this
-			this.video = new window.Clappr.Player({
-				parentId: `#video-${that.data.id}${that.randomPostfix}`,
-				source: 'https://idrfonline-vod-hls.cdnvideo.ru/idrfonline-vod/_definst_/mp4:IDRFFEST_stream1.mp4/playlist.m3u8',
-				width: '100%',
-				height: '100%',
-				mute: true,
-				autoPlay: true,
-				hideMediaControl: true,
-				playback: {
-					playInline: true,
-				},
-				language: 'ru-RU',
-				events: {
-					onReady: function() {
-						that.checkVisible()
-						that.listenScroll()
-					}
-				}
-			});
-		}
-	},
-
-	watch: {
-		$route(to) {
-			// if(!this.autoplayVideo) return
-			setTimeout(() => {
-				if (process.client && to.path === '/' && this.data && this.data.stream.status !== 'not_started') {
-					// this.initVideo()
-				} else {
-					this.video = false
-					this.restartCheckVisible = 1
-				}
-			}, 100);
 		}
 	}
 }

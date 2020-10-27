@@ -62,8 +62,6 @@ export default {
 
 .cards {
   &--goods {
-    background-color: #fff;
-
     .cards__item {
       display: flex;
       flex-shrink: 0;
