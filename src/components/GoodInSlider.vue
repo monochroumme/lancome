@@ -13,7 +13,7 @@
         </p>
         <div class="good__info-wrap">
           <div class="good__price-wrap">
-            <span class="good__old-price" v-if="good.isDiscount">
+            <span class="good__old-price" v-if="good.isDiscount == 'true'">
               {{ good.price.old | currency }} <span class="rub">₽</span>
             </span>
             <span class="good__price">
