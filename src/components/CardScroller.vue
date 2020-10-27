@@ -1,6 +1,6 @@
 <template>
   <section v-if="data" class="cards">
-    <swiper ref="Cards" class="cards__swiper" :options="swiperOption">
+    <swiper ref="mySwiper" class="cards__swiper" :options="swiperOption">
       <swiper-slide class="cards__item" v-for="(card, i) in data" :key="i">
         <slot :card="card"></slot>
       </swiper-slide>
@@ -36,6 +36,7 @@ export default {
     return {
       swiperOption: {
         slidesPerView: "auto",
+        initialSlide: 0,
         loop: false,
         autoplay: {
           delay: 5000
@@ -44,6 +45,8 @@ export default {
           nextEl: `.next-btn-goods-${this.idVideo}`,
           prevEl: `.prev-btn-goods-${this.idVideo}`
         },
+        observer: true,
+        observeParents: true,
         preloadImages: false,
         lazyLoading: true,
         lazy: {
@@ -51,6 +54,14 @@ export default {
         }
       }
     }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$refs.mySwiper.$swiper.slideTo(0);
+      }, 50);
+    });
   }
 };
 

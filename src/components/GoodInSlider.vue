@@ -6,10 +6,10 @@
       </div>
       <div class="good__desc-wrap">
         <h3 class="good__title" v-if="good.title">
-          {{ good.title }}
+          {{ decodeURI(good.title) }}
         </h3>
         <p class="good__desc" v-if="good.description">
-          {{ good.description }}
+          {{ decodeURI(good.description) }}
         </p>
         <div class="good__info-wrap">
           <div class="good__price-wrap">
@@ -45,7 +45,9 @@ export default {
 .cards__item {
   &:last-of-type {
     .good__desc-wrap {
-      border-right: none;
+      &:after {
+        display: none;
+      }
     }
   }
 }
@@ -58,6 +60,7 @@ export default {
   overflow: hidden;
   background-color: $white;
   transition: box-shadow 0.4s, border-color 0.4s;
+  margin-right: 2px;
 
   &:hover {
     cursor: pointer;
@@ -87,6 +90,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     img {
       height: 100%;
@@ -103,8 +107,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-right: 1px solid #e5e5e5;
     position: relative;
+    z-index: 1;
 
     &:before {
       content: '';
@@ -119,6 +123,18 @@ export default {
       &:hover {
         background: #F7F6F7;
       }
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      right: 3px;
+      top: 0;
+      height: 100%;
+      width: 1px;
+      background: #e5e5e5;
+      z-index: 1;
     }
   }
 

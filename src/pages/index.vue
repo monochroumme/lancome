@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import data from '@/temp/data.js';
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Index',
@@ -55,24 +55,23 @@ export default {
 
   data() {
     return {
-      rawData: data,
       filteredData: [],
       currentStream: null,
       currentStreamOpen: false
     }
   },
 
-  mounted() {
-    if (window.params)
-      console.log(window.params);
-
+  async created() {
     if (window.params) {
+      console.log(window.params);
+      await this.getWidgetData(window.params); 
+      
       let data = [],
         curStream;
 
-      if (window.params.streams) {
-        window.params.streams.forEach(q => {
-          curStream = this.rawData.find(s => s.stream.id == q);
+      if (window.params.streamId) {
+        window.params.streamId.forEach(q => {
+          curStream = this.widgetData.find(s => s.stream.id == q);
           if (curStream)
             data.push(curStream);
           else {
@@ -88,7 +87,7 @@ export default {
     currentStreamExists: {
       handler(n) {
         if (n) {
-          this.currentStream = this.rawData.find(s => s.stream.url == this.$route.query.stream);
+          this.currentStream = this.widgetData.find(s => s.stream.url == this.$route.query.stream);
           this.$nextTick(() => {
             requestAnimationFrame(() => {
               this.currentStreamOpen = true;
@@ -108,6 +107,8 @@ export default {
   },
 
   computed: {
+    ...mapState(['widgetData']),
+
     currentStreamExists() {
       if (this.$route && this.$route.query && this.$route.query.stream)
         return true
@@ -116,6 +117,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['getWidgetData']),
+
     goToHome() {
       this.$router.push({ name: 'index' })
     }
@@ -145,7 +148,6 @@ export default {
   transform: translateY(110%);
   transition: transform .2s ease;
   z-index: 10;
-  height: 100vh;
   display: flex;
   flex-direction: column;
 
