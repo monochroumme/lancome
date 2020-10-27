@@ -113,7 +113,7 @@ export default {
             });
           }, 301);
         } else {
-          // document.body.scrollTop = this.savedScroll;
+          document.body.scrollTop = this.savedScroll;
           document.body.style.overflowY = '';
           this.$refs.index.style.height = 0;
           this.$nextTick(() => {
