@@ -87,12 +87,16 @@ export default {
           if (curStream)
             data.push(curStream);
         });
-        this.filteredData = data;
+        this.filteredData = data.sort((a, b) => {
+          return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+        });
       }
     }
 
     if (this.filteredData.length == 0)
-      this.filteredData = this.widgetData;
+      this.filteredData = this.widgetData.sort((a, b) => {
+        return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+      });
 
     window.addEventListener('resize', this.onResize, false);
     this.onResize();
