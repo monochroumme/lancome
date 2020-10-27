@@ -15,6 +15,12 @@
 							{{ $moment(data.stream.startAt).format('DD MMMM HH:mm').toLowerCase() }}
 						</span>
 					</template>
+					<template v-if="data.stream.status == 'finished'">
+						<span class="stream-starts-at">Стрим закончился</span>
+						<span class="date">
+								{{ $moment(data.stream.endAt).format('DD MMMM HH:mm').toLowerCase() }}
+							</span>
+						</template>
 					<template v-if="data.stream.status == 'live'">
 						<div class="live"><span>LIVE</span></div>
 					</template>
