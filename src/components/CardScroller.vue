@@ -38,10 +38,10 @@ export default {
         slidesPerView: "auto",
         initialSlide: 0,
         loop: false,
-        // autoplay: {
-        //   delay: 5000,
-        //   disableOnInteraction: false
-        // },
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false
+        },
         navigation: {
           nextEl: `.next-btn-goods-${this.idVideo}`,
           prevEl: `.prev-btn-goods-${this.idVideo}`
