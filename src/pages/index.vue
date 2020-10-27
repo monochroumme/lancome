@@ -215,7 +215,7 @@ export default {
   right: 0;
   transform: translateY(110%);
   transition: transform .2s ease;
-  z-index: 10;
+  z-index: 1000;
   display: none;
   flex-direction: column;
   overflow: auto;
