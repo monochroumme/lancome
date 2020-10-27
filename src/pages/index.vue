@@ -74,7 +74,6 @@ export default {
 
   async created() {
     if (window.params) {
-      console.log(window.params);
       await this.getWidgetData(window.params); 
 
       let data = [],
@@ -85,9 +84,6 @@ export default {
           curStream = this.widgetData.find(s => s.stream.id == q);
           if (curStream)
             data.push(curStream);
-          else {
-            console.log(`Stream with id ${q} doesn't exist`);
-          }
         });
         this.filteredData = data;
       }
