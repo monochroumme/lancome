@@ -11,17 +11,17 @@
           <path d="M1 1L17 17M17 1L1 17" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </div>
-      <div class="inner-page__top">
-        <div class="inner-page__author">
-          <img :src="currentStream.streamer.image.small" :alt="decodeURI(currentStream.streamer.title)">
-          <span>{{ decodeURI(currentStream.streamer.title) }}</span>
-        </div>
-        <h1 class="inner-page__title">{{ decodeURI(currentStream.stream.title) }}</h1>
-        <img :src="currentStream.stream.image.big" class="inner-page__video" :alt="currentStream.stream.title" v-if="currentStream.stream.status === 'not_started'">
-        <iframe :src="currentStream.stream.player.url" frameborder="0" v-else></iframe>
-        <!-- <Emoji class="stream-page__video_emoji" :stream="currentStream.id" v-if="currentStream.status !== 'NOT_STARTED'" /> -->
+      <!-- <div class="inner-page__top"> -->
+      <div class="inner-page__author">
+        <img :src="currentStream.streamer.image.small" :alt="decodeURI(currentStream.streamer.title)">
+        <span>{{ decodeURI(currentStream.streamer.title) }}</span>
       </div>
-      <div class="inner-page__products" v-body-scroll-lock="isInnerShown">
+      <h1 class="inner-page__title">{{ decodeURI(currentStream.stream.title) }}</h1>
+      <img :src="currentStream.stream.image.big" class="inner-page__video" :alt="currentStream.stream.title" v-if="currentStream.stream.status === 'not_started'">
+      <iframe :src="currentStream.stream.player.url" frameborder="0" v-else></iframe>
+        <!-- <Emoji class="stream-page__video_emoji" :stream="currentStream.id" v-if="currentStream.status !== 'NOT_STARTED'" /> -->
+      <!-- </div> -->
+      <div class="inner-page__products">
         <a target="_blank" :href="product.link" class="inner-page__products-item" v-for="(product,i) in currentStream.products" :key="i">
           <img :src="product.image.small" :alt="decodeURI(product.title)" class="inner-page__products-image">
           <div class="inner-page__products-info">
@@ -100,6 +100,7 @@ export default {
     currentStreamExists: {
       handler(n) {
         if (n && this.widgetData) {
+          document.body.style.overflowY = 'hidden';
           setTimeout(() => {
             this.currentStream = this.widgetData.find(s => s.stream.url == this.$route.query.stream);
             this.$nextTick(() => {
@@ -109,6 +110,7 @@ export default {
             });
           }, 301);
         } else {
+          document.body.style.overflowY = '';
           this.$nextTick(() => {
             this.currentStreamOpen = false;
             setTimeout(() => {
@@ -162,10 +164,13 @@ export default {
 @include common;
 
 .index-page {
+  height: 0;
+}
+
+.container {
   padding-top: 50px;
   padding-bottom: 50px;
 }
-
 
 .inner-page {
   background: white;
@@ -179,10 +184,14 @@ export default {
   z-index: 10;
   display: none;
   flex-direction: column;
+  overflow: auto;
 
   iframe {
     width: 100%;
+    min-height: 300px;
     height: 300px;
+    position: sticky;
+    top: 0;
   }
 
   &.active {
@@ -236,9 +245,7 @@ export default {
   }
 
   &__products {
-    overflow-y: auto;
-    padding: 24px 10px;
-    min-height: 0;
+    padding: 24px 10px 50px;
 
     &-item {
       display: flex;
@@ -337,6 +344,7 @@ export default {
 @media (max-width: 420px) {
   .inner-page {
     iframe {
+      min-height: 210px;
       height: 210px;
     }
   }
