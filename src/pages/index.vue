@@ -229,6 +229,7 @@ export default {
   &__products {
     overflow-y: auto;
     padding: 24px 10px;
+    min-height: 0;
 
     &-item {
       display: flex;
