@@ -6,7 +6,7 @@
       </swiper-slide>
     </swiper>
     <div class="swiper-button-prev promo__arrow-btn arrow-btn" :class="`prev-btn-goods-${idVideo}`" slot="button-prev"></div>
-    <div class="swiper-button-next promo__arrow-btn arrow-btn arrow-btn-products" :class="`next-btn-goods-${idVideo}`" slot="button-next" ref="nextBtn"></div>
+    <div class="swiper-button-next promo__arrow-btn arrow-btn arrow-btn-products" :class="`next-btn-goods-${idVideo}`" slot="button-next"></div>
   </section>
 </template>
 <script>
@@ -119,6 +119,10 @@ export default {
       border-color .4s,
       opacity .4s,
       visibility .4s;
+
+    &:focus {
+      outline: none;
+    }
 
     &::after,
     &::before {

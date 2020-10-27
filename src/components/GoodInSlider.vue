@@ -83,6 +83,7 @@ export default {
     min-height: 180px;
     width: 180px;
     height: 180px;
+    padding: 20px;
     flex-shrink: 0;
     overflow: hidden;
     position: relative;

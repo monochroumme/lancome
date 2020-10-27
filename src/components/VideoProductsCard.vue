@@ -1,6 +1,5 @@
 <template>
 	<div class="video-products-card" v-if="data">
-		{{ data.stream.startAt }}
 		<div class="video-products-card__top">
 			<div class="video-products-card__basic-info">
 				<div class="video-products-card__basic-info__left">
