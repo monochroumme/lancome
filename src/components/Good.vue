@@ -2,7 +2,7 @@
   <div class="good__outer">
     <a v-if="good.price" class="good" target="_blank" :href="good.link">
       <div v-if="good.image" class="good__img-wrap">
-        <img :src="good.image.small" :alt="good.title" />
+        <img v-lazy="good.image.small" :alt="good.title" />
       </div>
       <div class="good__desc-wrap" :class="{hovered}" @mouseover="hovered = true" @mouseleave="hovered = false">
         <h3 class="good__title" v-if="good.title" @mouseover.stop="hovered = false">
