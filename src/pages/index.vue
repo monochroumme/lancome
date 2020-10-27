@@ -87,16 +87,28 @@ export default {
           if (curStream)
             data.push(curStream);
         });
-        this.filteredData = data.sort((a, b) => {
-          return new Date(a.stream.startAt) - new Date(b.stream.startAt)
-        });
+        this.filteredData = data;
       }
     }
 
     if (this.filteredData.length == 0)
-      this.filteredData = this.widgetData.sort((a, b) => {
-        return new Date(a.stream.startAt) - new Date(b.stream.startAt)
-      });
+      this.filteredData = this.widgetData;
+
+    // properly sorting arrays
+    // first live, then future ones, then old ones
+    if (this.filteredData.length > 0) {
+      const lives = this.filteredData.filter(d => d.stream.status == 'live');
+      if (lives)
+        this.filteredData = this.filteredData.filter(d => d.stream.status != 'live');
+      if (this.filteredData.length > 0) {
+        this.filteredData = this.filteredData.sort((a, b) => {
+          return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+        });
+        if (lives) {
+          this.filteredData.unshift(...lives); // add lives to the beginning of the array
+        }
+      }
+    }
 
     window.addEventListener('resize', this.onResize, false);
     this.onResize();
@@ -109,7 +121,7 @@ export default {
           setTimeout(() => {
             this.savedScroll = document.body.scrollTop;
             this.currentStream = this.widgetData.find(s => s.stream.url == this.$route.query.stream);
-            if (window.innerWidth <= 550) {
+            if (window.innerWidth <= 550 && this.currentStream.stream.status != 'not_started') {
               this.$nextTick(() => {
                 requestAnimationFrame(() => {
                   document.body.style.overflowY = 'hidden';
@@ -119,6 +131,10 @@ export default {
                 });
               });
             } else {
+              document.body.style.overflowY = '';
+              if (this.$refs.index)
+                this.$refs.index.style.height = 0;
+              this.currentStreamOpen = false;
               scrollTo(document.querySelector(`#special-widget-${this.currentStream.stream.url}`).offsetTop - 50, null, 500);
             }
           }, 301);

@@ -71,12 +71,15 @@ export default {
 
 		openVideo() {
 			if (this.data.stream.status != 'not_started') {
-				this.$router.push({query: {
-					stream: this.data.stream.url
-				}}).catch(()=>{});
 				if (this.windowWidth > 550) {
 					this.isIFrameShown = true;
 				}
+				this.$router.push({name: 'index', query: {}});
+				this.$nextTick(() => {
+					this.$router.push({query: {
+						stream: this.data.stream.url
+					}}).catch(()=>{});
+				});
 			}
 		}
 	}
