@@ -53,7 +53,7 @@ module.exports = [
   {
     "stream": {
       "id": "2",
-      "url": "some_url",
+      "url": "some_url2",
       "title": "Уход за волосами (live)",
       "status": "live",
       "startAt": "2020-10-29T12:00:00Z",

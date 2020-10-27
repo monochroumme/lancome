@@ -22,7 +22,7 @@
 			</div>
 			<h2 class="video-products-card__title">{{ data.stream.title }}</h2>
 		</div>
-		<div class="video-products-card__video" :class="{clickable: data.stream.status != 'not_started'}" :id="`video-block-${data.stream.id}`">
+		<div class="video-products-card__video" :class="{clickable: data.stream.status != 'not_started'}" :id="`video-block-${data.stream.id}`" @click="openVideo">
 			<img v-lazy="data.stream.image.big" :alt="data.title" class="thumbnail">
 			<svg class="icon-play" v-if="data.stream.status !== 'not_started'" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect width="72" height="72" transform="matrix(1 0 0 -1 0 72)" fill="black"/>
@@ -54,6 +54,14 @@ export default {
 	methods: {
 		formatDate(date) {
 			return date.slice(0, date.length - 5) + '· ' + date.slice(date.length - 5)
+		},
+
+		openVideo() {
+			if (this.data.stream.status != 'not_started') {
+				this.$router.push({query: {
+					stream: this.data.stream.url
+				}})
+			}
 		}
 	}
 }
@@ -63,6 +71,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/mixins/common';
 @include common;
+
+.clickable {
+	cursor: pointer;
+}
 
 .video-products-card {
 	width: 100%;
