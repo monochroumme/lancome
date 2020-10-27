@@ -18,8 +18,8 @@
   </noscript>
   <div id="app"></div>
   <script type="text/javascript">
-    window.params = {
-      streamId: [123, 1, 2, 3, 4, 5],
+    window.WIDGET_SPECIAL_PARAMS_300 = {
+      streamId: [1, 2, 3],
       brand: 'lancome',
       domain: 'lancome.ru',
       templateType: 'master_template',
@@ -27,6 +27,18 @@
       contentType: '24stream',
       // el: '.stream_area'
     }
+
+    // { // new scope to not declare scripts globally
+    //   const scripts = [
+    //     'https://widget.live.24ttl.stream/js/widget.js',
+    //     'https://widget.live.24ttl.stream/js/app.js'
+    //   ]
+    //   scripts.forEach(src => {
+    //     let script = document.createElement('script');
+    //     script.setAttribute('src', src)
+    //     document.body.appendChild(script);
+    //   })
+    // }
   </script>
 </body>
 

@@ -4,11 +4,11 @@
       <div v-if="good.image" class="good__img-wrap">
         <img :src="good.image.small" :alt="good.title" />
       </div>
-      <div class="good__desc-wrap">
-        <h3 class="good__title" v-if="good.title">
+      <div class="good__desc-wrap" :class="{hovered}" @mouseover="hovered = true" @mouseleave="hovered = false">
+        <h3 class="good__title" v-if="good.title" @mouseover.stop="hovered = false">
           {{ decodeURI(good.title) }}
         </h3>
-        <p class="good__desc" v-if="good.description">
+        <p class="good__desc" v-if="good.description" @mouseover.stop="hovered = false">
           {{ decodeURI(good.description) }}
         </p>
         <div class="good__info-wrap">
@@ -29,7 +29,7 @@
               </span>
             </span>
           </div>
-          <div class="good__buy-button">
+          <div class="good__buy-button" @mouseover.stop="hovered = false">
             <span>Купить</span>
           </div>
         </div>
@@ -40,7 +40,13 @@
 
 <script>
 export default {
-  props: ["good"]
+  props: ["good"],
+
+  data() {
+    return {
+      hovered: false
+    }
+  }
 }
 </script>
 
@@ -120,19 +126,23 @@ export default {
     position: relative;
     z-index: 1;
 
+    &.hovered {
+      &:before {
+        opacity: 1;
+      }
+    }
+
     &:before {
       content: '';
       display: block;
       position: absolute;
       left: 0;
-      top: -16px;
-      bottom: -16px;
+      top: -60px;
+      bottom: -60px;
       width: 100%;
-      transition: background .2s ease;
-
-      &:hover {
-        background: #F7F6F7;
-      }
+      opacity: 0;
+      transition: opacity .2s ease;
+      background: #F7F6F7;
     }
 
     &:after {
@@ -299,8 +309,6 @@ export default {
 
 @media (max-width: 1400px) {
   .good {
-    margin-top: 20px;
-    margin-bottom: 20px;
     margin-right: 9px;
 
     &__img-wrap {
@@ -311,8 +319,12 @@ export default {
     }
 
     &__desc-wrap {
-      margin-top: 4px;
-      margin-bottom: 4px;
+      margin-top: 24px;
+      margin-bottom: 24px;
+
+      &:after {
+        right: 0;
+      }
     }
   }
 }

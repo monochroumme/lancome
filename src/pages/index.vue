@@ -55,6 +55,8 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 
+import scrollTo from '@/utils/smooth-scroll'
+
 export default {
   name: 'Index',
 
@@ -73,14 +75,14 @@ export default {
   },
 
   async created() {
-    if (window.params) {
-      await this.getWidgetData(window.params); 
+    if (window.WIDGET_SPECIAL_PARAMS_300) {
+      await this.getWidgetData(window.WIDGET_SPECIAL_PARAMS_300); 
 
       let data = [],
         curStream;
 
-      if (window.params.streamId && this.widgetData) {
-        window.params.streamId.forEach(q => {
+      if (window.WIDGET_SPECIAL_PARAMS_300.streamId && this.widgetData) {
+        window.WIDGET_SPECIAL_PARAMS_300.streamId.forEach(q => {
           curStream = this.widgetData.find(s => s.stream.id == q);
           if (curStream)
             data.push(curStream);
@@ -100,20 +102,26 @@ export default {
           setTimeout(() => {
             this.savedScroll = document.body.scrollTop;
             this.currentStream = this.widgetData.find(s => s.stream.url == this.$route.query.stream);
-            this.$nextTick(() => {
-              requestAnimationFrame(() => {
-                document.body.style.overflowY = 'hidden';
-                if (this.$refs.index)
-                  this.$refs.index.style.height = 0;
-                this.currentStreamOpen = true;
+            if (window.innerWidth <= 550) {
+              this.$nextTick(() => {
+                requestAnimationFrame(() => {
+                  document.body.style.overflowY = 'hidden';
+                  if (this.$refs.index)
+                    this.$refs.index.style.height = 0;
+                  this.currentStreamOpen = true;
+                });
               });
-            });
+            } else {
+              scrollTo(document.querySelector(`#special-widget-${this.currentStream.stream.url}`).offsetTop - 50, null, 500);
+            }
           }, 301);
         } else {
-          document.body.scrollTop = this.savedScroll;
-          document.body.style.overflowY = '';
-          if (this.$refs.index)
-            this.$refs.index.style.height = 0;
+          if (window.innerWidth <= 550) {
+            document.body.scrollTop = this.savedScroll;
+            document.body.style.overflowY = '';
+            if (this.$refs.index)
+              this.$refs.index.style.height = 0;
+          }
           this.$nextTick(() => {
             this.currentStreamOpen = false;
             setTimeout(() => {

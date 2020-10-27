@@ -13,17 +13,11 @@ module.exports = {
           default: false,
           // Custom common chunk
           bundle: {
-            name: 'common',
+            name: 'widget',
             chunks: 'all',
             minChunks: 1,
             reuseExistingChunk: true,
             enforce: true,
-          },
-          // Customer vendor
-          vendors: {
-            chunks: 'initial',
-            name: 'vendors',
-            test: 'vendors',
           },
           // Merge all the CSS into one file
           styles: {
@@ -50,7 +44,9 @@ module.exports = {
       return args
     })
     // https://medium.com/@aetherus.zhou/vue-cli-3-performance-optimization-55316dcd491c
-    config.plugins.delete('prefetch');
+    config.optimization.delete('splitChunks') // no vendor chunks
+    config.plugins.delete('prefetch')         // no prefetch chunks
+    config.plugins.delete('preload')  
     config.plugin('CompressionPlugin').use(CompressionPlugin);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-	<div class="video-products-card" v-if="data">
+	<div class="video-products-card" v-if="data" :id="`special-widget-${data.stream.url}`">
 		<div class="video-products-card__top">
 			<div class="video-products-card__basic-info">
 				<div class="video-products-card__basic-info__left">
@@ -36,7 +36,7 @@
 		<div class="video-products-card__products" v-if="data.products">
 			<card-scroller v-if="data && data.products && data.products.length > 0" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :idVideo="`${data.stream.id}`">
 				<template v-slot="{card}">
-					<good-in-slider class="cards__good" :good="card" />
+					<good class="cards__good" :good="card" />
 				</template>
 			</card-scroller>
 		</div>
@@ -49,7 +49,7 @@ export default {
 
 	components: {
 		CardScroller: () => import('@/components/CardScroller'),
-		GoodInSlider: () => import('@/components/GoodInSlider'),
+		Good: () => import('@/components/Good'),
 	},
 
 	data() {
@@ -98,7 +98,7 @@ export default {
 
 	iframe {
 		width: 100%;
-		height: 710px;
+		height: 704px;
 	}
 
 	&__top {
@@ -198,13 +198,14 @@ export default {
 
 	&__video {
 		width: 100%;
+		max-height: 705px;
 		position: relative;
 
 		.thumbnail {
 			width: 100%;
-			height: 100%;
+			height: 705px;
 			min-height: 200px;
-			max-height: 700px;
+			max-height: 705px;
 			object-fit: cover;
 		}
 
@@ -267,7 +268,10 @@ export default {
 		}
 
 		&__video {
-			img {
+			max-height: 420px;
+
+			.thumbnail {
+				height: 420px;
 				max-height: 420px;
 			}
 		}
@@ -279,6 +283,15 @@ export default {
 		iframe {
 			height: 340px;
 		}
+
+		&__video {
+			max-height: 340px;
+
+			.thumbnail {
+				height: 340px;
+				max-height: 340px;
+			}
+		}
 	}
 }
 
@@ -288,6 +301,15 @@ export default {
 
 		iframe {
 			height: 320px;
+		}
+
+		&__video {
+			max-height: 320px;
+
+			.thumbnail {
+				height: 320px;
+				max-height: 320px;
+			}
 		}
 
     &__top {
