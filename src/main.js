@@ -24,4 +24,4 @@ new Vue({
   router,
   store,
   render: function (h) { return h(App) }
-}).$mount('#app')
+}).$mount(window.WIDGET_SPECIAL_PARAMS_300 ? window.WIDGET_SPECIAL_PARAMS_300.el : '#app')
