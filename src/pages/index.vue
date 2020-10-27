@@ -107,7 +107,8 @@ export default {
             this.$nextTick(() => {
               requestAnimationFrame(() => {
                 document.body.style.overflowY = 'hidden';
-                this.$refs.index.style.height = 0;
+                if (this.$refs.index)
+                  this.$refs.index.style.height = 0;
                 this.currentStreamOpen = true;
               });
             });
@@ -115,7 +116,8 @@ export default {
         } else {
           document.body.scrollTop = this.savedScroll;
           document.body.style.overflowY = '';
-          this.$refs.index.style.height = 0;
+          if (this.$refs.index)
+            this.$refs.index.style.height = 0;
           this.$nextTick(() => {
             this.currentStreamOpen = false;
             setTimeout(() => {
