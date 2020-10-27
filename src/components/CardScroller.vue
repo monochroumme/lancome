@@ -85,6 +85,11 @@ export default {
   }
 }
 
+.swiper-container {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
 .cards__hover {
   display: flex;
   align-items: center;

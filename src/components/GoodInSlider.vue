@@ -312,7 +312,6 @@ export default {
     margin-top: 16px;
     margin-bottom: 16px;
     margin-right: 0;
-    border-right: 1px solid #e5e5e5;
 
     &__title {
       margin-bottom: 4px;

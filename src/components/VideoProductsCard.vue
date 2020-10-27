@@ -1,5 +1,6 @@
 <template>
 	<div class="video-products-card" v-if="data">
+		{{ data.stream.startAt }}
 		<div class="video-products-card__top">
 			<div class="video-products-card__basic-info">
 				<div class="video-products-card__basic-info__left">
@@ -23,8 +24,9 @@
 			<h2 class="video-products-card__title">{{ decodeURI(data.stream.title) }}</h2>
 		</div>
 		<div class="video-products-card__video" :class="{clickable: data.stream.status != 'not_started'}" :id="`video-block-${data.stream.id}`" @click="openVideo">
-			<img v-lazy="data.stream.image.big" :alt="decodeURI(data.stream.title)" class="thumbnail">
-			<svg class="icon-play" v-if="data.stream.status !== 'not_started'" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<img v-lazy="data.stream.image.big" :alt="decodeURI(data.stream.title)" class="thumbnail" v-if="!isIFrameShown">
+			<iframe :src="data.stream.player.url" frameborder="0" v-else></iframe>
+			<svg class="icon-play" v-if="data.stream.status !== 'not_started' && !isIFrameShown" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect width="72" height="72" transform="matrix(1 0 0 -1 0 72)" fill="black"/>
 				<path d="M24 48.49V23.51C24 21.9603 25.6864 20.9993 27.0196 21.7894L48.0965 34.2794C49.4037 35.0541 49.4037 36.9459 48.0965 37.7206L27.0196 50.2106C25.6864 51.0007 24 50.0397 24 48.49Z" fill="white"/>
 			</svg>
@@ -44,11 +46,17 @@
 
 <script>
 export default {
-	props: ['data'],
+	props: ['data', 'windowWidth'],
 
 	components: {
 		CardScroller: () => import('@/components/CardScroller'),
 		GoodInSlider: () => import('@/components/GoodInSlider'),
+	},
+
+	data() {
+		return {
+			isIFrameShown: false
+		}
 	},
 
 	methods: {
@@ -58,9 +66,13 @@ export default {
 
 		openVideo() {
 			if (this.data.stream.status != 'not_started') {
-				this.$router.push({query: {
-					stream: this.data.stream.url
-				}})
+				if (this.windowWidth <= 550) {
+					this.$router.push({query: {
+						stream: this.data.stream.url
+					}}).catch(()=>{});
+				} else {
+					this.isIFrameShown = true;
+				}
 			}
 		}
 	}
@@ -84,6 +96,11 @@ export default {
 	background: #FFFFFF;
 	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12);
 	border-radius: 8px;
+
+	iframe {
+		width: 100%;
+		height: 710px;
+	}
 
 	&__top {
 		padding: 20px;
@@ -246,6 +263,10 @@ export default {
 
 @media (max-width: 1400px) {
 	.video-products-card {
+		iframe {
+			height: 420px;
+		}
+
 		&__video {
 			img {
 				max-height: 420px;
@@ -254,9 +275,21 @@ export default {
 	}
 }
 
+@media (max-width: 660px) {
+	.video-products-card {
+		iframe {
+			height: 340px;
+		}
+	}
+}
+
 @media (max-width: 550px) {
 	.video-products-card {
 		border-radius: 0;
+
+		iframe {
+			height: 320px;
+		}
 
     &__top {
       padding: 14px 10px 18px;

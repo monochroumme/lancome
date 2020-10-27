@@ -10,7 +10,9 @@ export default new Vuex.Store({
   },
   mutations: {
     setWidgetData(state, payload) {
-      state.widgetData = payload
+      state.widgetData = payload.sort((a, b) => {
+        return new Date(b.stream.startAt) - new Date(a.stream.startAt)
+      })
     }
   },
   actions: {
