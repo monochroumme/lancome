@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getWidgetData({commit}, payload) {
-      const res = await axios.get(`https://widget.live.24ttl.stream/${payload.brand}/${payload.domain}/${payload.templateType}/${payload.resultType}/${payload.contentType}/data.json`);
+      const res = await axios.get(`https://widget.live.24ttl.stream/${payload.brand}/${payload.domain}/${payload.templateType}/${payload.resultType}/${payload.contentType}/data.json?tm=${moment().unix()}`);
       if (res && res.data)
         commit('setWidgetData', res.data);
     }

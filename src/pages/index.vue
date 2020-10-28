@@ -54,6 +54,8 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
+import axios from 'axios';
+import moment from 'moment';
 
 import scrollTo from '@/utils/smooth-scroll'
 
@@ -75,14 +77,15 @@ export default {
   },
 
   async created() {
-    if (window.WIDGET_SPECIAL_PARAMS_300) {
-      await this.getWidgetData(window.WIDGET_SPECIAL_PARAMS_300); 
+    const params = window.WIDGET_SPECIAL_PARAMS_300;
+    if (params) {
+      await this.getWidgetData(params); 
 
       let data = [],
         curStream;
 
-      if (window.WIDGET_SPECIAL_PARAMS_300.streamId && this.widgetData) {
-        window.WIDGET_SPECIAL_PARAMS_300.streamId.forEach(q => {
+      if (params.streamId && this.widgetData) {
+        params.streamId.forEach(q => {
           curStream = this.widgetData.find(s => s.stream.id == q);
           if (curStream)
             data.push(curStream);
@@ -92,26 +95,36 @@ export default {
     }
 
     if (this.filteredData.length == 0)
-      this.filteredData = this.widgetData;
+      this.filteredData = this.widgetData.slice();
 
     // properly sorting arrays
     // first live, then future ones, then old ones
-    if (this.filteredData.length > 0) {
-      const lives = this.filteredData.filter(d => d.stream.status == 'live');
-      if (lives)
-        this.filteredData = this.filteredData.filter(d => d.stream.status != 'live');
-      if (this.filteredData.length > 0) {
-        this.filteredData = this.filteredData.sort((a, b) => {
-          return new Date(a.stream.startAt) - new Date(b.stream.startAt)
-        });
-        if (lives) {
-          this.filteredData.unshift(...lives); // add lives to the beginning of the array
-        }
-      }
-    }
+    this.filteredData = this.sortByStatus(this.filteredData);
 
     window.addEventListener('resize', this.onResize, false);
     this.onResize();
+
+    // updating data every 10 seconds
+    if (params) {
+      let curStreamIndex
+      setInterval(async () => {
+        const res = await axios.get(`https://widget.live.24ttl.stream/${params.brand}/${params.domain}/${params.templateType}/${params.resultType}/${params.contentType}/data.json?tm=${moment().unix()}`);
+        if (res && res.data) {
+          res.data.forEach(s => {
+            curStreamIndex = this.filteredData.findIndex(d => d.stream.id == s.stream.id);
+            if (curStreamIndex != -1) {
+              this.filteredData[curStreamIndex].stream.status = s.stream.status;
+              this.filteredData.push({});
+              this.filteredData.pop();
+            } else {
+              this.filteredData.push(s);
+            }
+          });
+
+          this.filteredData = this.sortByStatus(this.filteredData);
+        }
+      }, 10 * 1000); // every 10 seconds
+    }
   },
 
   watch: {
@@ -178,6 +191,34 @@ export default {
       this.$router.push({ name: 'index' })
     },
 
+    sortByStatus(data) {
+      if (this.filteredData.length > 0) {
+        let lives = data.filter(d => d.stream.status == 'live'),
+              not_started = data.filter(d => d.stream.status == 'not_started'),
+              done = data.filter(d => d.stream.status == 'done');
+        data = [];
+        if (lives) {
+          lives = lives.sort((a,b) => {
+            return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+          })
+          data.push(...lives);
+        }
+        if (not_started) {
+          not_started = not_started.sort((a,b) => {
+            return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+          })
+          data.push(...not_started);
+        }
+        if (done) {
+          done = done.sort((a,b) => {
+            return new Date(a.stream.startAt) - new Date(b.stream.startAt)
+          })
+          data.push(...done);
+        }
+        return data;
+      }
+    },
+
     onResize() {
       if (!this.$el) {
         window.removeEventListener('resize', this.onResize, false);
@@ -196,10 +237,6 @@ export default {
 
 @include special-container;
 @include common;
-
-.index-page {
-  height: 0;
-}
 
 .container {
   padding-top: 50px;
