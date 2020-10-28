@@ -12,9 +12,10 @@ const routes = [
   }
 ]
 
+
 const router = new VueRouter({
   mode: 'history',
-  base: window.location.origin,
+  base: window.location.pathname,
   routes
 })
 

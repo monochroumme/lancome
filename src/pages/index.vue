@@ -1,5 +1,5 @@
 <template>
-  <div class="index-page" ref="index">
+  <div class="index-page">
     <div class="container">
       <video-products-card v-for="(item, i) in filteredData" :key="i" :data="item" :windowWidth="windowWidth" />
     </div>
@@ -138,15 +138,15 @@ export default {
               this.$nextTick(() => {
                 requestAnimationFrame(() => {
                   document.body.style.overflowY = 'hidden';
-                  if (this.$refs.index)
-                    this.$refs.index.style.height = 0;
+                  if (this.$el)
+                    this.$el.style.height = 0;
                   this.currentStreamOpen = true;
                 });
               });
             } else {
               document.body.style.overflowY = '';
-              if (this.$refs.index)
-                this.$refs.index.style.height = 0;
+              if (this.$el)
+                this.$el.style.height = '';
               this.currentStreamOpen = false;
               scrollTo(document.querySelector(`#special-widget-${this.currentStream.stream.url}`).offsetTop - 50, null, 500);
             }
@@ -155,8 +155,8 @@ export default {
           if (window.innerWidth <= 550) {
             document.body.scrollTop = this.savedScroll;
             document.body.style.overflowY = '';
-            if (this.$refs.index)
-              this.$refs.index.style.height = 0;
+            if (this.$el)
+              this.$el.style.height = '';
           }
           this.$nextTick(() => {
             this.currentStreamOpen = false;
