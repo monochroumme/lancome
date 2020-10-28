@@ -42,7 +42,7 @@
 		<div class="video-products-card__products" v-if="data.products">
 			<card-scroller v-if="data && data.products && data.products.length > 0" class="home-page__streams-list cards--goods main-stream-products" :data="data.products" :idVideo="`${data.stream.id}`">
 				<template v-slot="{card}">
-					<good class="cards__good" :good="card" />
+					<good class="cards__good" :good="card" :windowWidth="windowWidth" />
 				</template>
 			</card-scroller>
 		</div>

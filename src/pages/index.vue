@@ -23,7 +23,7 @@
       <!-- </div> -->
       <div class="inner-page__products">
         <a target="_blank" :href="product.link" class="inner-page__products-item" v-for="(product,i) in currentStream.products" :key="i">
-          <img :src="product.image.small" :alt="decodeURI(product.title)" class="inner-page__products-image">
+          <img :src="windowWidth <= 550 ? product.image.small : product.image.big" :alt="decodeURI(product.title)" class="inner-page__products-image">
           <div class="inner-page__products-info">
             <h2 class="inner-page__products-title">{{ decodeURI(product.title) }}</h2>
             <h3 class="inner-page__products-desc">{{ decodeURI(product.description) }}</h3>
