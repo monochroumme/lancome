@@ -6,10 +6,10 @@
       </div>
       <div class="good__desc-wrap" :class="{hovered}" @mouseover="hovered = true" @mouseleave="hovered = false">
         <h3 class="good__title" v-if="good.title" @mouseover.stop="hovered = false">
-          {{ decodeURI(good.title) }}
+          {{ decodeURIComponent(good.title) }}
         </h3>
         <p class="good__desc" v-if="good.description" @mouseover.stop="hovered = false">
-          {{ decodeURI(good.description) }}
+          {{ decodeURIComponent(good.description) }}
         </p>
         <div class="good__info-wrap">
           <div class="good__price-wrap">

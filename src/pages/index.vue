@@ -13,20 +13,20 @@
       </div>
       <!-- <div class="inner-page__top"> -->
       <div class="inner-page__author">
-        <img :src="currentStream.streamer.image.small" :alt="decodeURI(currentStream.streamer.title)">
-        <span>{{ decodeURI(currentStream.streamer.title) }}</span>
+        <img :src="currentStream.streamer.image.small" :alt="decodeURIComponent(currentStream.streamer.title)">
+        <span>{{ decodeURIComponent(currentStream.streamer.title) }}</span>
       </div>
-      <h1 class="inner-page__title">{{ decodeURI(currentStream.stream.title) }}</h1>
+      <h1 class="inner-page__title">{{ decodeURIComponent(currentStream.stream.title) }}</h1>
       <img :src="currentStream.stream.image.big" class="inner-page__video" :alt="currentStream.stream.title" v-if="currentStream.stream.status === 'not_started'">
       <iframe :src="currentStream.stream.player.url" frameborder="0" v-else></iframe>
         <!-- <Emoji class="stream-page__video_emoji" :stream="currentStream.id" v-if="currentStream.status !== 'NOT_STARTED'" /> -->
       <!-- </div> -->
       <div class="inner-page__products">
         <a target="_blank" :href="product.link" class="inner-page__products-item" v-for="(product,i) in currentStream.products" :key="i">
-          <img :src="windowWidth <= 550 ? product.image.small : product.image.big" :alt="decodeURI(product.title)" class="inner-page__products-image">
+          <img :src="windowWidth <= 550 ? product.image.small : product.image.big" :alt="decodeURIComponent(product.title)" class="inner-page__products-image">
           <div class="inner-page__products-info">
-            <h2 class="inner-page__products-title">{{ decodeURI(product.title) }}</h2>
-            <h3 class="inner-page__products-desc">{{ decodeURI(product.description) }}</h3>
+            <h2 class="inner-page__products-title">{{ decodeURIComponent(product.title) }}</h2>
+            <h3 class="inner-page__products-desc">{{ decodeURIComponent(product.description) }}</h3>
             <div class="inner-page__products-price-wrapper">
               <div class="inner-page__products-prices">
                 <span class="inner-page__products-price-old" v-if="product.isDiscount == 'true'">{{ product.price.old | currency }}

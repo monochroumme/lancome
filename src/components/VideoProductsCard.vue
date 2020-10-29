@@ -3,9 +3,9 @@
 		<div class="video-products-card__top">
 			<div class="video-products-card__basic-info">
 				<div class="video-products-card__basic-info__left">
-					<img v-lazy="data.streamer.image.small" :alt="decodeURI(data.streamer.title)" v-if="data.streamer">
+					<img v-lazy="data.streamer.image.small" :alt="decodeURIComponent(data.streamer.title)" v-if="data.streamer">
 					<div class="video-products-card__basic-info__left__author">
-						<span class="author" v-if="data.streamer">{{ decodeURI(data.streamer.title) }}</span>
+						<span class="author" v-if="data.streamer">{{ decodeURIComponent(data.streamer.title) }}</span>
 					</div>
 				</div>
 				<div class="video-products-card__basic-info__right">
@@ -26,10 +26,10 @@
 					</template>
 				</div>
 			</div>
-			<h2 class="video-products-card__title">{{ decodeURI(data.stream.title) }}</h2>
+			<h2 class="video-products-card__title">{{ decodeURIComponent(data.stream.title) }}</h2>
 		</div>
 		<div class="video-products-card__video" :class="{clickable: data.stream.status != 'not_started'}" :id="`video-block-${data.stream.id}`" @click="openVideo">
-			<img v-lazy="windowWidth <= 550 ? data.stream.image.small : data.stream.image.big" :alt="decodeURI(data.stream.title)" class="thumbnail" v-if="!isIFrameShown">
+			<img v-lazy="windowWidth <= 550 ? data.stream.image.small : data.stream.image.big" :alt="decodeURIComponent(data.stream.title)" class="thumbnail" v-if="!isIFrameShown">
 			<iframe :src="data.stream.player.url" frameborder="0" v-else></iframe>
 			<svg class="icon-play" v-if="data.stream.status !== 'not_started' && !isIFrameShown" width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect width="72" height="72" transform="matrix(1 0 0 -1 0 72)" fill="black"/>
